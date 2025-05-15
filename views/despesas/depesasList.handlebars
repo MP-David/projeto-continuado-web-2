@@ -1,0 +1,22 @@
+<h2>Lista de Despesas</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Conta</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Data</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each despesas}}
+        <tr>
+            <td>{{conta_bancaria.id}}</td>
+            <td>{{descricao}}</td>
+            <td>{{valor}}</td>
+            <td>{{date}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

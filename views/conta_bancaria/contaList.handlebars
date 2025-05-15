@@ -1,0 +1,24 @@
+<h2>Lista de Contas Bancárias</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Banco</th>
+        <th>Agência</th>
+        <th>Conta</th>
+        <th>Saldo</th>
+        <th>Despesas</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each contas}}
+        <tr>
+            <td>{{banco}}</td>
+            <td>{{agencia}}</td>
+            <td>{{numero_conta}}</td>
+            <td>{{saldo}}</td>
+            <td>{{despesas.length}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

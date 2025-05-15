@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Transação</title>
+</head>
+<body>
+<h1>Nova Transação</h1>
+
+<form action="/historico/create" method="POST">
+    <label for="id_usuario">ID do Usuário:</label>
+    <input type="text" id="id_usuario" name="id_usuario" required><br><br>
+
+    <label for="tipo_transacao">Tipo de Transação:</label>
+    <select id="tipo_transacao" name="tipo_transacao" required>
+        <option value="despesa">Despesa</option>
+        <option value="receita">Receita</option>
+        <option value="conta_bancaria">Conta Bancária</option>
+    </select><br><br>
+
+    <label for="acao">Ação:</label>
+    <select id="acao" name="acao" required>
+        <option value="criado">Criado</option>
+        <option value="editado">Editado</option>
+        <option value="excluido">Excluído</option>
+    </select><br><br>
+
+    <h3>Detalhes</h3>
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" name="detalhes.descricao" required><br><br>
+
+    <label for="valor">Valor (R$):</label>
+    <input type="number" step="0.01" id="valor" name="detalhes.valor" required><br><br>
+
+    <label for="data">Data:</label>
+    <input type="date" id="data" name="detalhes.data" required><br><br>
+
+    <label for="conta_bancaria">Conta Bancária:</label>
+    <input type="text" id="conta_bancaria" name="detalhes.conta_bancaria" required><br><br>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<br>
+<a href="/historico">Voltar para lista</a>
+</body>
+</html>

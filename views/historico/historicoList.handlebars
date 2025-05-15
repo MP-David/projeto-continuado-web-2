@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico de Transações</title>
+</head>
+<body>
+<h1>Histórico de Transações</h1>
+
+{{#if historicos.length}}
+    <table>
+        <thead>
+        <tr>
+            <th>ID Usuário</th>
+            <th>Tipo</th>
+            <th>Ação</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Conta Bancária</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each historicos}}
+            <tr>
+                <td>{{this.id_usuario}}</td>
+                <td>{{this.tipo_transacao}}</td>
+                <td>{{this.acao}}</td>
+                <td>{{this.detalhes.descricao}}</td>
+                <td>R$ {{this.detalhes.valor}}</td>
+                <td>{{this.data_operacao}}</td>
+                <td>{{this.detalhes.conta_bancaria}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p>Nenhuma transação encontrada.</p>
+{{/if}}
+
+<br>
+</body>
+</html>
