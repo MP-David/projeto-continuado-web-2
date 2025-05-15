@@ -42,6 +42,21 @@ initDatabase();
 async function initDatabase() {
     try {
 
+        await db.sequelize.query('DROP SCHEMA public CASCADE');
+        await db.sequelize.query('CREATE SCHEMA public');
+
+        await db.sequelize.sync({ force: true });
+
+        await db.Usuario.create({
+            id: 100,
+            nome: 'admin',
+            login: 'admin',
+            email: 'admin2@mail.com',
+            senha: '123',
+            telefone: '454545',
+            data_nascimento: new Date()
+        });
+
         await db.Usuario.sync();
         console.log("Tabela de usuários sincronizada");
 

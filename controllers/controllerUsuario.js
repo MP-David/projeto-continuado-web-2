@@ -36,20 +36,32 @@
             res.render('usuario/usuarioCreate');
         },
         async postCreate(req, res) {
-            db.Usuario.create({
-                login:req.body.login,
-                senha:req.body.senha
-                }).then(() => {
-                    res.redirect('/home');
-                }).catch((err) => {
-                    console.log(err);
+            try {
+                await db.Usuario.create({
+                    login: req.body.login,
+                    senha: req.body.senha,
+                    nome: req.body.nome || null,
+                    email: req.body.email || null,
+                    data_nascimento: req.body.data_nascimento ? new Date(req.body.data_nascimento) : null,
+                    telefone: req.body.telefone || null,
                 });
+                res.redirect('/home');
+            } catch (err) {
+                console.error('Erro ao criar usuário:', err);
+                res.status(500).send('Erro ao criar usuário');
+            }
         },
+
         async getList(req, res) {
-            db.Usuario.findAll().then (usuarios => {
-                res.render('usuario/usuarioList', {usuarios: usuarios.map(user => user.toJSON())});
-            }).catch((err) => {
-                console.log(err);
-            });
+            try {
+                const usuarios = await db.Usuario.findAll();
+                res.render('usuario/usuarioList', {
+                    usuarios: usuarios.map(user => user.toJSON())
+                });
+            } catch (err) {
+                console.error('Erro ao buscar usuários:', err);
+                res.status(500).send('Erro ao buscar usuários');
+            }
         }
+
     }   
