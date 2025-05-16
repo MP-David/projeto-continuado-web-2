@@ -1,0 +1,21 @@
+<form action="/historico/update" method="post">
+    <input type="hidden" name="id" value="{{transacao.id}}">
+
+    Tipo:
+    <select name="tipo">
+        <option value="entrada" {{#if (eq transacao.tipo 'entrada')}}selected{{/if}}>Entrada</option>
+        <option value="saida" {{#if (eq transacao.tipo 'saida')}}selected{{/if}}>Saída</option>
+    </select>
+    <br><br>
+
+    Valor: <input type="text" name="valor" value="{{transacao.valor}}">
+    <br><br>
+
+    Descrição: <input type="text" name="descricao" value="{{transacao.descricao}}">
+    <br><br>
+
+    Data: <input type="date" name="data" value="{{transacao.data}}">
+    <br><br>
+
+    <input type="submit" value="Editar">
+</form>

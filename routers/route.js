@@ -24,16 +24,24 @@ route.get("/usuarios/list", controllerUsuario.getList);
 route.get('/contas/create', contaBancariaController.getCreate);
 route.post('/contas/create', contaBancariaController.postCreate);
 route.get('/contas/list', contaBancariaController.getList);
+route.get('/contas/update/:id', contaBancariaController.getUpdate);
+route.post('/contas/update', contaBancariaController.postUpdate);
+route.get('/contas/delete/:id', contaBancariaController.getDelete);
 
 // Controller de Despesas
 route.get('/despesas/create', despesasController.getCreate);
 route.post('/despesas/create', despesasController.postCreate);
 route.get('/despesas/list', despesasController.getList);
-route.get('/despesas/depesasList', despesasController.getList);
+route.get('/despesas/update/:id', despesasController.getUpdate);
+route.post('/despesas/update', despesasController.postUpdate);
+route.get('/despesas/delete/:id', despesasController.getDelete);
 
-// Controller HistoricoTransacoes
+// Controller de Histórico de Transações
 route.get('/historico/create', historicoTransacoesController.getCreate);
 route.post('/historico/create', historicoTransacoesController.postCreate);
 route.get('/historico/list', historicoTransacoesController.getList);
+route.get('/historico/update/:id', historicoTransacoesController.getUpdate);
+route.post('/historico/update', historicoTransacoesController.postUpdate);
+route.get('/historico/delete/:id', historicoTransacoesController.getDelete);
 
 module.exports = route;

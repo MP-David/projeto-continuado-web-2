@@ -8,7 +8,7 @@
 <h1>Histórico de Transações</h1>
 
 {{#if historicos.length}}
-    <table>
+    <table border="1">
         <thead>
         <tr>
             <th>ID Usuário</th>
@@ -18,6 +18,8 @@
             <th>Valor</th>
             <th>Data</th>
             <th>Conta Bancária</th>
+            <th>Editar</th>
+            <th>Deletar</th>
         </tr>
         </thead>
         <tbody>
@@ -30,6 +32,8 @@
                 <td>R$ {{this.detalhes.valor}}</td>
                 <td>{{this.data_operacao}}</td>
                 <td>{{this.detalhes.conta_bancaria}}</td>
+                <td><a href="/historico/update/{{this.id}}">Editar</a></td>
+                <td><a href="/historico/delete/{{this.id}}">Deletar</a></td>
             </tr>
         {{/each}}
         </tbody>

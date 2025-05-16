@@ -7,6 +7,8 @@
         <th>Descrição</th>
         <th>Valor</th>
         <th>Data</th>
+        <th>Editar</th>
+        <th>Deletar</th>
     </tr>
     </thead>
     <tbody>
@@ -16,6 +18,8 @@
             <td>{{descricao}}</td>
             <td>{{valor}}</td>
             <td>{{date}}</td>
+            <td><a href="/despesas/update/{{id}}">Editar</a></td>
+            <td><a href="/despesas/delete/{{id}}">Deletar</a></td>
         </tr>
     {{/each}}
     </tbody>

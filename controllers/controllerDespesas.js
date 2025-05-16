@@ -4,8 +4,6 @@ module.exports = {
 
     async getCreate(req, res) {
         try {
-
-            console.log(req.body);
             const contas = await db.ContaBancaria.findAll({
                 where: { id_usuario: req.user.id },
             });
@@ -27,7 +25,7 @@ module.exports = {
                 valor: req.body.valor,
                 date: req.body.date
             });
-            res.redirect('/despesas/depesasList');
+            res.redirect('/despesas/list');
         } catch (err) {
             console.log(err);
             res.status(500).send('Erro ao criar despesa');
@@ -49,6 +47,47 @@ module.exports = {
         } catch (err) {
             console.log(err);
             res.status(500).send('Erro ao listar despesas');
+        }
+    },
+
+    async getUpdate(req, res) {
+        try {
+            const despesa = await db.Despesas.findByPk(req.params.id);
+            const contas = await db.ContaBancaria.findAll({
+                where: { id_usuario: req.user.id }
+            });
+
+            res.render('despesas/despesasUpdate', {
+                despesa: despesa.dataValues,
+                contas: contas.map(c => c.toJSON())
+            });
+        } catch (err) {
+            console.log(err);
+            res.status(500).send('Erro ao carregar formulário de edição');
+        }
+    },
+
+    async postUpdate(req, res) {
+        try {
+            await db.Despesas.update(req.body, {
+                where: { id: req.body.id }
+            });
+            res.render('home');
+        } catch (err) {
+            console.log(err);
+            res.status(500).send('Erro ao atualizar despesa');
+        }
+    },
+
+    async getDelete(req, res) {
+        try {
+            await db.Despesas.destroy({
+                where: { id: req.params.id }
+            });
+            res.render('home');
+        } catch (err) {
+            console.log(err);
+            res.status(500).send('Erro ao deletar despesa');
         }
     }
 };

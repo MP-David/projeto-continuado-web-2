@@ -36,5 +36,29 @@ module.exports = {
             console.log(err);
             res.status(500).send('Erro ao listar contas');
         }
+    },
+
+    async getUpdate(req, res) {
+        await db.ContaBancaria.findByPk(req.params.id).then(
+            conta => res.render('conta_bancaria/contaUpdate', { conta: conta.dataValues })
+        ).catch(function (err) {
+            console.log(err);
+        });
+    },
+
+    async postUpdate(req, res) {
+        await db.ContaBancaria.update(req.body, { where: { id: req.body.id } }).then(
+            res.render('home')
+        ).catch(function (err) {
+            console.log(err);
+        });
+    },
+
+    async getDelete(req, res) {
+        await db.ContaBancaria.destroy({ where: { id: req.params.id } }).then(
+            res.render('home')
+        ).catch(err => {
+            console.log(err);
+        });
     }
 };

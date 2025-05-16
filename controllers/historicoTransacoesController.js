@@ -35,5 +35,37 @@ module.exports = {
             console.error('Erro ao buscar históricos:', err);
             res.status(500).send('Erro ao buscar históricos');
         }
+    },
+
+    async getUpdate(req, res) {
+        try {
+            const historico = await historicoTransacoes.findById(req.params.id);
+            res.render('historico/historicoUpdate', {
+                historico: historico.toJSON()
+            });
+        } catch (err) {
+            console.error('Erro ao carregar histórico para edição:', err);
+            res.status(500).send('Erro ao carregar formulário de edição');
+        }
+    },
+
+    async postUpdate(req, res) {
+        try {
+            await historicoTransacoes.findByIdAndUpdate(req.body.id, req.body);
+            res.render('home');
+        } catch (err) {
+            console.error('Erro ao atualizar histórico:', err);
+            res.status(500).send('Erro ao atualizar histórico');
+        }
+    },
+
+    async getDelete(req, res) {
+        try {
+            await historicoTransacoes.findByIdAndDelete(req.params.id);
+            res.render('home');
+        } catch (err) {
+            console.error('Erro ao deletar histórico:', err);
+            res.status(500).send('Erro ao deletar histórico');
+        }
     }
 }

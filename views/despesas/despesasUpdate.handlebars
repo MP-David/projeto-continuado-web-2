@@ -1,0 +1,22 @@
+<form action="/despesas/update" method="post">
+    <input type="hidden" name="id" value="{{despesa.id}}">
+
+    Descrição: <input type="text" name="descricao" value="{{despesa.descricao}}">
+    <br><br>
+
+    Valor: <input type="text" name="valor" value="{{despesa.valor}}">
+    <br><br>
+
+    Data: <input type="date" name="date" value="{{despesa.date}}">
+    <br><br>
+
+    Conta:
+    <select name="id_conta">
+        {{#each contas}}
+            <option value="{{id}}" {{#if (eq id ../despesa.id_conta)}}selected{{/if}}>{{banco}} - {{numero_conta}}</option>
+        {{/each}}
+    </select>
+    <br><br>
+
+    <input type="submit" value="Editar">
+</form>

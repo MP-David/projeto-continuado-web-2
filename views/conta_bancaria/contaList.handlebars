@@ -8,6 +8,8 @@
         <th>Conta</th>
         <th>Saldo</th>
         <th>Despesas</th>
+        <th>Editar</th>
+        <th>Deletar</th>
     </tr>
     </thead>
     <tbody>
@@ -18,6 +20,8 @@
             <td>{{numero_conta}}</td>
             <td>{{saldo}}</td>
             <td>{{despesas.length}}</td>
+            <td><a href="/contas/update/{{id}}">Editar</a></td>
+            <td><a href="/contas/delete/{{id}}">Deletar</a></td>
         </tr>
     {{/each}}
     </tbody>

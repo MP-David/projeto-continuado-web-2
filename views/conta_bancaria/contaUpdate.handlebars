@@ -1,0 +1,12 @@
+<form action="/contas/update" method="post">
+    <input type="hidden" name="id" value="{{conta.id}}">
+    Banco: <input type="text" name="banco" value="{{conta.banco}}">
+    <br><br>
+    Agência: <input type="text" name="agencia" value="{{conta.agencia}}">
+    <br><br>
+    Conta: <input type="text" name="numero_conta" value="{{conta.numero_conta}}">
+    <br><br>
+    Saldo: <input type="text" name="saldo" value="{{conta.saldo}}">
+    <br><br>
+    <input type="submit" value="Editar">
+</form>
