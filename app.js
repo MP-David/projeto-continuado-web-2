@@ -1,24 +1,19 @@
 const express = require('express');
-const session = require('express-session')
 const handlebars = require('express-handlebars');
 const routes = require('./routers/route');
 const db = require('./config/db_sequelize');
-
+const session = require('express-session');
+//var cookieParser = require('cookie-parser');
 const app = express();
 
-
+app.use(session({secret:'textosecreto',
+    cookie:{maxAge: 30*60*1000}}));
+//app.use(cookieParser());
 app.engine('handlebars', handlebars.engine({defaultLayout:'main'}));
 app.set('view engine','handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(session({
-    secret: 'x',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }
-}));
 
 app.use(async (req, res, next) => {
     if (req.session.userId) {

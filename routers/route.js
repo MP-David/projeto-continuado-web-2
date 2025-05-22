@@ -14,11 +14,13 @@ route.get("/home", function (req, res) {
 // Login e Recuperação de Senha
 route.get("/", controllerUsuario.getLogin);
 route.post("/login", controllerUsuario.postLogin);
-
-// CRUD de Usuários
+route.get("/logout", controllerUsuario.getLogout);
 route.get("/usuarios/create", controllerUsuario.getCreate);
 route.post("/usuarios/create", controllerUsuario.postCreate);
 route.get("/usuarios/list", controllerUsuario.getList);
+route.get('usuarios/update/:id', controllerUsuario.getEdit);
+route.post('usuarios/update/:id', controllerUsuario.postEdit);
+route.post('usuarios/delete/:id', controllerUsuario.postDelete)
 
 // Controller de Conta Bancária
 route.get('/contas/create', contaBancariaController.getCreate);
