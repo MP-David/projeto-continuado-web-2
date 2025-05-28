@@ -1,8 +1,8 @@
 const express = require('express');
-const controllerUsuario = require('../controllers/controllerUsuario');
-const despesasController = require('../controllers/controllerDespesas');
-const contaBancariaController = require('../controllers/contaBancariaController');
-const historicoTransacoesController = require('../controllers/historicoTransacoesController');
+const controllerUsuario = require('../controllers/UsuarioController');
+const despesasController = require('../controllers/DespesasController');
+const contaBancariaController = require('../controllers/ContaBancariaController');
+const historicoTransacoesController = require('../controllers/HistoricoTransacoesController');
 const route = express.Router();
 
 // Home

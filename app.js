@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const routes = require('./routers/route');
 const db = require('./config/db_sequelize');
+const middlewares = require('./middlewares/middlewares');
 const session = require('express-session');
 //var cookieParser = require('cookie-parser');
 const app = express();
@@ -30,6 +31,7 @@ app.use(async (req, res, next) => {
     next();
 });
 
+app.use(middlewares.logRegister,middlewares.sessionControl)
 app.use(routes);
 
 initDatabase();
@@ -49,7 +51,8 @@ async function initDatabase() {
             email: 'admin2@mail.com',
             senha: '123',
             telefone: '454545',
-            data_nascimento: new Date()
+            data_nascimento: new Date(),
+            tipo: 1
         });
 
         await db.Usuario.sync();

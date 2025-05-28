@@ -2,34 +2,87 @@
 <html>
 
 <head>
-    <title>Sistema de Controle de Receitas</title>
+    <title>Sistema de Controle Financeiro</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 <center>
-    <h1> Sistema de Controle de Receitas </h1>
+    <h1> Sistema de Controle Financeiro </h1>
+    <label>Usuário Logado: {{login}}</label>
 
-    <a href="/usuarios/create"> <button> Cadastrar Usuário </button> </a>
-    <a href="/usuarios/list"> <button> Listar Usuários </button> </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <br> <br>
-
-    <a href="/contas/create"> <button> Cadastrar Conta Bancária </button> </a>
-    <a href="/contas/list"> <button> Listar Contas Bancárias </button> </a>
-
-    <br> <br>
-
-    <a href="/despesas/create"> <button> Cadastrar Despesa </button> </a>
-    <a href="/despesas/list"> <button> Listar Despesas </button> </a>
-
-    <br> <br>
-
-    <a href="/historico/create"> <button> Cadastrar Historico </button> </a>
-    <a href="/historico/list"> <button> Listar Historico </button> </a>
-
-    <br><br>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Home <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Usuários
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {{#if admin}}
+                            <a class="dropdown-item" href="/usuarios/create">Cadastrar Usuário</a>
+                        {{/if}}
+                        <a class="dropdown-item" href="/usuarios/list">Listar Usuários</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Contas Bancárias
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {{#if admin}}
+                            <a class="dropdown-item" href="/contas/create">Cadastrar Conta Bancária</a>
+                        {{/if}}
+                        <a class="dropdown-item" href="/contas/list">Listar Contas Bancárias</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Despesas
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {{#if admin}}
+                            <a class="dropdown-item" href="/despesas/create">Cadastrar Despesa</a>
+                        {{/if}}
+                        <a class="dropdown-item" href="/despesas/list">Listar Despesas</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Histórico
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {{#if admin}}
+                            <a class="dropdown-item" href="/historico/create">Cadastrar Histórico</a>
+                        {{/if}}
+                        <a class="dropdown-item" href="/historico/list">Listar Histórico</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
 
     {{{body}}}
+
 </center>
 </body>
 

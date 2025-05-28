@@ -21,6 +21,9 @@ module.exports = (sequelize, Sequelize) => {
         telefone: {
             type: Sequelize.STRING, allowNull: true
         },
+        tipo: {
+            type: Sequelize.INTEGER, allowNull: true
+        }
     }, {
         tableName: 'usuario',
         underscored: true
