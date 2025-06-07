@@ -1,4 +1,5 @@
 const db = require('../config/db_sequelize');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 
 module.exports = {
@@ -10,18 +11,31 @@ module.exports = {
         res.redirect('/');
     },
     async postLogin(req, res) {
+
+        console.log('Conteúdo de req.body no postLogin:', req.body);
+
         const { login, senha } = req.body;
 
         if (!login || !senha) {
+            console.error('Erro: Login ou senha ausentes em req.body');
             return res.status(400).send('Login e senha são obrigatórios');
         }
 
         try {
+
             const user = await db.Usuario.findOne({
-                where: { login, senha }
+                where: { login }
             });
 
             if (!user) {
+
+                return res.status(404).send('Usuário ou senha incorretos');
+            }
+
+            const isPasswordValid = await bcrypt.compare(senha, user.senha);
+
+            if (!isPasswordValid) {
+
                 return res.status(404).send('Usuário ou senha incorretos');
             }
 
@@ -41,15 +55,18 @@ module.exports = {
     },
     async postCreate(req, res) {
         try {
+
+            const hashedPassword = await bcrypt.hash(req.body.senha, 10);
+
             await db.Usuario.create({
                 login: req.body.login,
-                senha: req.body.senha,
+                senha: hashedPassword,
                 nome: req.body.nome || null,
                 email: req.body.email || null,
                 data_nascimento: req.body.data_nascimento ? new Date(req.body.data_nascimento) : null,
                 telefone: req.body.telefone || null,
             });
-            res.redirect('/usuario/list');
+            res.redirect('/usuarios/list');
         } catch (err) {
             console.error('Erro ao criar usuário:', err);
             res.status(500).send('Erro ao criar usuário');
@@ -85,15 +102,24 @@ module.exports = {
                 return res.status(404).send('Usuário não encontrado');
             }
 
+            let newPassword = req.body.senha;
+            if (newPassword && newPassword.length > 0) {
+
+                newPassword = await bcrypt.hash(newPassword, 10);
+            } else {
+
+                newPassword = usuario.senha;
+            }
+
             await usuario.update({
                 nome: req.body.nome,
                 email: req.body.email,
-                senha: req.body.senha,
+                senha: newPassword,
                 data_nascimento: req.body.data_nascimento ? new Date(req.body.data_nascimento) : null,
                 telefone: req.body.telefone
             });
 
-            res.redirect('/usuario/list');
+            res.redirect('/usuarios/list');
         } catch (err) {
             console.error('Erro ao atualizar usuário:', err);
             res.status(500).send('Erro ao atualizar usuário');
@@ -107,7 +133,7 @@ module.exports = {
             }
 
             await usuario.destroy();
-            res.redirect('/usuario/list');
+            res.redirect('/usuarios/list');
         } catch (err) {
             console.error('Erro ao deletar usuário:', err);
             res.status(500).send('Erro ao deletar usuário');

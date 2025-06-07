@@ -52,8 +52,8 @@ initDatabase();
 
 async function initDatabase() {
     try {
-        await db.sequelize.query('DROP SCHEMA public CASCADE');
-        await db.sequelize.query('CREATE SCHEMA public');
+        // await db.sequelize.query('DROP SCHEMA public CASCADE');
+        // await db.sequelize.query('CREATE SCHEMA public');
 
         await db.sequelize.sync({ force: false });
 
