@@ -1,22 +1,27 @@
+<h2>Editar Despesa</h2>
+
 <form action="/despesas/update" method="post">
     <input type="hidden" name="id" value="{{despesa.id}}">
 
-    Descrição: <input type="text" name="descricao" value="{{despesa.descricao}}">
-    <br><br>
+    <label for="descricao_update">Descrição:</label>
+    <input type="text" name="descricao" id="descricao_update" value="{{despesa.descricao}}"><br><br>
 
-    Valor: <input type="text" name="valor" value="{{despesa.valor}}">
-    <br><br>
+    <label for="valor_update">Valor:</label>
+    <input type="number" step="0.01" name="valor" id="valor_update" value="{{despesa.valor}}"><br><br>
 
-    Data: <input type="date" name="date" value="{{despesa.date}}">
-    <br><br>
+    <label for="date_update">Data:</label>
+    <input type="date" name="date" id="date_update" value="{{despesa.date}}"><br><br>
 
-    Conta:
-    <select name="id_conta">
+    <label for="id_conta_update">Conta:</label>
+    <select name="id_conta" id="id_conta_update">
         {{#each contas}}
             <option value="{{id}}" {{#if (eq id ../despesa.id_conta)}}selected{{/if}}>{{banco}} - {{numero_conta}}</option>
         {{/each}}
     </select>
     <br><br>
 
-    <input type="submit" value="Editar">
+    <button type="submit">Atualizar Despesa</button>
 </form>
+
+<br>
+<a href="/despesas/list">Voltar para a Lista de Despesas</a>

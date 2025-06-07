@@ -1,0 +1,252 @@
+openapi: 3.0.0
+info:
+  title: API de Gerenciamento de Despesas
+  description: Uma API RESTful para gerenciar despesas de usuários.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081/api
+    description: Servidor de Desenvolvimento
+security:
+  - bearerAuth: [] # Define o esquema de segurança para toda a API
+
+paths:
+  /auth/login:
+    post:
+      summary: Autentica um usuário e retorna um token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  example: admin
+                senha:
+                  type: string
+                  example: 123
+      responses:
+        '200':
+          description: Autenticação bem-sucedida, retorna o token JWT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Token JWT para autenticação em futuras requisições
+        '401':
+          description: Login ou senha inválidos
+        '500':
+          description: Erro interno do servidor
+
+  /despesas:
+    get:
+      summary: Lista todas as despesas do usuário autenticado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Uma lista de despesas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Despesa'
+        '401':
+          description: Não autorizado (token ausente ou inválido)
+        '500':
+          description: Erro interno do servidor
+    post:
+      summary: Cria uma nova despesa
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NovaDespesa'
+      responses:
+        '201':
+          description: Despesa criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Despesa'
+        '401':
+          description: Não autorizado (token ausente ou inválido)
+        '500':
+          description: Erro interno do servidor
+
+  /despesas/{id}:
+    get:
+      summary: Obtém uma despesa específica pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID da despesa a ser obtida
+      responses:
+        '200':
+          description: Detalhes da despesa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Despesa'
+        '401':
+          description: Não autorizado (token ausente ou inválido)
+        '404':
+          description: Despesa não encontrada
+        '500':
+          description: Erro interno do servidor
+    put:
+      summary: Atualiza uma despesa existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID da despesa a ser atualizada
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarDespesa'
+      responses:
+        '200':
+          description: Despesa atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Despesa'
+        '401':
+          description: Não autorizado (token ausente ou inválido)
+        '404':
+          description: Despesa não encontrada ou sem permissão
+        '500':
+          description: Erro interno do servidor
+    delete:
+      summary: Deleta uma despesa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID da despesa a ser deletada
+      responses:
+        '204':
+          description: Despesa deletada com sucesso (No Content)
+        '401':
+          description: Não autorizado (token ausente ou inválido)
+        '404':
+          description: Despesa não encontrada ou sem permissão
+        '500':
+          description: Erro interno do servidor
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Despesa:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: ID da despesa
+        id_usuario:
+          type: integer
+          readOnly: true
+          description: ID do usuário ao qual a despesa pertence
+        id_conta:
+          type: integer
+          description: ID da conta bancária associada à despesa
+        descricao:
+          type: string
+          description: Descrição da despesa
+        valor:
+          type: number
+          format: float
+          description: Valor da despesa
+        date:
+          type: string
+          format: date
+          description: Data da despesa (YYYY-MM-DD)
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - id_conta
+        - descricao
+        - valor
+        - date
+    NovaDespesa:
+      type: object
+      properties:
+        id_conta:
+          type: integer
+          description: ID da conta bancária associada à despesa
+          example: 1
+        descricao:
+          type: string
+          description: Descrição da despesa
+          example: Conta de Luz
+        valor:
+          type: number
+          format: float
+          description: Valor da despesa
+          example: 150.75
+        date:
+          type: string
+          format: date
+          description: Data da despesa (YYYY-MM-DD)
+          example: 2023-01-15
+      required:
+        - id_conta
+        - descricao
+        - valor
+        - date
+    AtualizarDespesa:
+      type: object
+      properties:
+        id_conta:
+          type: integer
+          description: ID da conta bancária associada à despesa
+          example: 2
+        descricao:
+          type: string
+          description: Nova descrição da despesa
+          example: Conta de Água
+        valor:
+          type: number
+          format: float
+          description: Novo valor da despesa
+          example: 80.20
+        date:
+          type: string
+          format: date
+          description: Nova data da despesa (YYYY-MM-DD)
+          example: 2023-02-20

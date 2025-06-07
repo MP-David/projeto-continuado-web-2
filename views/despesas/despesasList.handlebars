@@ -1,0 +1,33 @@
+<h2>Lista de Despesas</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Conta</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Data</th>
+        <th>Editar</th>
+        <th>Deletar</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each despesas}}
+        <tr>
+            <td>{{conta_bancaria.banco}} - {{conta_bancaria.numero_conta}}</td>
+            <td>{{descricao}}</td>
+            <td>{{valor}}</td>
+            <td>{{date}}</td>
+            <td><a href="/despesas/update/{{id}}">Editar</a></td>
+            <td><a href="/despesas/delete/{{id}}">Deletar</a></td>
+        </tr>
+    {{else}}
+        <tr>
+            <td colspan="6">Nenhuma despesa encontrada.</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<br>
+<a href="/despesas/create">Cadastrar Nova Despesa</a>
